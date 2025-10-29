@@ -3,11 +3,11 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Copy package files from the subdirectory for better cache behavior
-COPY "Crear sitio web (1)/package.json" "Crear sitio web (1)/package-lock.json*" ./
+# Copy package.json only (safer than wildcard copy)
+COPY "Crear sitio web (1)/package.json" ./
 
-# Install deps (use npm ci when lockfile present)
-RUN if [ -f package-lock.json ]; then npm ci --omit=dev; else npm install --omit=dev; fi
+# Install dependencies (uses npm install to avoid failing on missing lockfile)
+RUN npm install --omit=dev
 
 # Copy the rest of the app from the subdirectory
 COPY "Crear sitio web (1)" ./
@@ -25,7 +25,7 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 # Copy nginx config from repo root
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Internal port used in fly.toml
+# Internal port used in fly
 EXPOSE 8080
 
 # Run nginx in foreground
