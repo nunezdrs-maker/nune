@@ -1,0 +1,20 @@
+app = "nune-site"
+primary_region = "iad"
+
+[build]
+  # Usar el Dockerfile que acabamos de añadir en la raíz
+  dockerfile = "Dockerfile"
+
+[env]
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
