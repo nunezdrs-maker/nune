@@ -1,20 +1,24 @@
-app = "nune-site"
-primary_region = "iad"
+# fly.toml app configuration file
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+
+app = 'desokupa-web'
+primary_region = 'mad'
 
 [build]
-  # Usar el Dockerfile que acabamos de añadir en la raíz
-  dockerfile = "Dockerfile"
 
-[env]
-
-[[services]]
+[http_service]
   internal_port = 8080
-  protocol = "tcp"
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
 
-  [[services.ports]]
-    port = 80
-    handlers = ["http"]
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
 
-  [[services.ports]]
-    port = 443
-    handlers = ["tls", "http"]
+[[statics]]
+  guest_path = "/app/dist"
+  url_prefix = "/"

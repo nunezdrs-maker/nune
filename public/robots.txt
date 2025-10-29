@@ -1,0 +1,23 @@
+# robots.txt para desokupacionleal.es
+
+User-agent: *
+Allow: /
+
+# Permitir todos los crawlers importantes
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Sitemap
+Sitemap: https://desokupacionleal.es/sitemap.xml
+
+# Rastreo preferente de la página principal y secciones clave
+Crawl-delay: 1
